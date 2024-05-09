@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     where: {
       userId: Number(userId),
       Staff: {
-        isActive: false,
+        isActive: true,
       },
     },
   });
