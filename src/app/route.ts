@@ -1,7 +1,10 @@
 import { db } from "@/server/db";
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const { searchParams } = new URL(req.url);
+  const paramUserId =  searchParams.get("userId")
+
   if (!(await db.user.findFirst())) {
     const promises = [1006091, 1006092].map(async (id) => {
       await db.user.create({
@@ -17,8 +20,7 @@ export async function GET() {
     });
     await Promise.all(promises);
   }
-
-  const userId = 1006091;
+  const userId = typeof paramUserId === "number" ? paramUserId: 1006091;
 
   const user = await db.user.findUnique({
     where: {
