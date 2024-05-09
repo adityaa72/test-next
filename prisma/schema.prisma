@@ -10,12 +10,12 @@ datasource db {
 model User {
     id     String @id @default(auto()) @map("_id") @db.ObjectId
     userId Int    @unique
-    Staff  Staff?
+    staff  Staff?
 }
 
 model Staff {
     id       String  @id @default(auto()) @map("_id") @db.ObjectId
     userId   Int     @unique
     isActive Boolean
-    User     User    @relation(fields: [userId], references: [userId])
+    user     User    @relation(fields: [userId], references: [userId])
 }
