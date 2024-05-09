@@ -5,33 +5,25 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const userId = searchParams.get("userId")!;
 
-  //   await db.user.create({
-  //     data: {
-  //       userId: 1006094,
-  //       Staff: {
-  //         create: {
-  //           isActive: true,
-  //         },
-  //       },
-  //     },
-  //   });
-
-  //   await db.user.create({
-  //     data: {
-  //       userId: 1006091,
-  //       Staff: {
-  //         create: {
-  //           isActive: true,
-  //         },
-  //       },
-  //     },
-  //   });
+//   const promises = [1006090, 1006091, 1006092].map(async (id) => {
+//     await db.user.create({
+//       data: {
+//         userId: id,
+//         Staff: {
+//           create: {
+//             isActive: true,
+//           },
+//         },
+//       },
+//     });
+//   });
+//   await Promise.all(promises);
 
   const user = await db.user.findUnique({
     where: {
       userId: Number(userId),
       Staff: {
-          isActive: false,
+        isActive: false,
       },
     },
   });
