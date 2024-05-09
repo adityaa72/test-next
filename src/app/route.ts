@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
     });
     await Promise.all(promises);
   }
-  const userId = typeof paramUserId === "number" ? paramUserId: 1006091;
+  const userId = typeof Number(paramUserId) === "number" ? Number(paramUserId): 1006091;
 
   const user = await db.user.findUnique({
     where: {
