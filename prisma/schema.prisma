@@ -16,6 +16,7 @@ model User {
 model Staff {
     id       String  @id @default(auto()) @map("_id") @db.ObjectId
     userId   Int     @unique
+    status   String
     isActive Boolean
     user     User    @relation(fields: [userId], references: [userId])
 }

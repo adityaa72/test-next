@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
-  const paramUserId =  searchParams.get("userId")
+  const paramUserId = searchParams.get("userId");
 
   if (!(await db.user.findFirst())) {
     const promises = [1006091, 1006092].map(async (id) => {
@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
           userId: id,
           staff: {
             create: {
+              status: "active",
               isActive: true,
             },
           },
@@ -20,11 +21,12 @@ export async function GET(req: NextRequest) {
     });
     await Promise.all(promises);
   }
-  const userId = typeof Number(paramUserId) === "number" ? Number(paramUserId): 1006091;
+  const userId =
+    typeof Number(paramUserId) === "number" ? Number(paramUserId) : 1006091;
 
   const user = await db.user.findUnique({
     where: {
-      userId: Number(userId),
+      userId,
       staff: {
         isActive: true,
       },
@@ -32,7 +34,7 @@ export async function GET(req: NextRequest) {
   });
   const user2 = await db.user.findUnique({
     where: {
-      userId: Number(userId),
+      userId,
     },
     include: {
       staff: true,
